@@ -1,0 +1,747 @@
+import random
+import time
+
+# WELCOME TO MY DICTIONARY OF COMMENTS
+# An alone hash signifies wrapped code
+
+# Continues to Main/other condition
+# Have it be known that is what two Hashes mean.
+
+
+Health = 100  # Player health
+PlayerAttack = 50
+SharpAttack = PlayerAttack + 125
+Money = 0
+
+# MedKit Grants
+MedKit = False
+
+MaxMedKit = 1
+
+MedKitTotal = 0
+
+MedKitGain = 50
+
+MedKitPrice = 15
+
+MaxMedKitPrice = 750
+
+# Bag Sizes
+BagSizeStone = 0
+
+BagSizeIron = 0
+
+BagSizeEmeralds = 0
+
+# InventorySwitch and checks
+#
+Inventory = False
+# Pickaxe Booleans
+BoughtRivetedPickaxe = False  # Bought status
+
+BoughtSharpPickaxe = False  #
+
+RivetedPickaxe = False  # Equipped status
+
+SharpPickaxe = False  #
+
+###
+# Prices for Pickaxes/ Items
+SharpPickaxePrice = 1500
+
+RivetedPickaxePrice = 2000
+
+# Maximum Sizes
+MaxBagSizeStone = 50
+
+MaxBagSizeIron = 25
+
+MaxBagSizeEmeralds = 15
+
+# Bag Upgrade Prices
+BagUpgradePriceStone = 500
+
+BagUpgradePriceIron = 1000
+
+BagUpgradePriceEmeralds = 1250
+
+# Returns For Upgrades
+BagUpgradeStone = 25
+
+BagUpgradeIron = 15
+
+BagUpgradeEmeralds = 5
+
+# Mineral Counters
+
+IronCounter = 0
+
+# =====
+UpgradesBought = 0  # This value applies to events that happen in the game for fun!!! :)
+
+print("                     Welcome to Beggar Miners Inc.\n"
+      "                     Ready to mine your feelings out?\n"
+      "==== ATTENTION : **GAME DOES NOT SAVE : I REPEAT, GAME DOES NOT SAVE** ====\n"
+      "                             Let's begin!.\n")
+if Health < 0:
+    Health = 100
+    print("===========================================================================\n"
+          "                     Welcome to Beggar Miners Inc.\n"
+          "                     Ready to mine your feelings out?\n"
+          "==== ATTENTION : **GAME DOES NOT SAVE : I REPEAT, GAME DOES NOT SAVE** ====\n"
+          "                             Let's begin!.\n")
+while Health >= 0:
+    IronChance = random.randint(1, 10)  # THESE ARE THE CHANCES
+    EmeraldsChance = random.randint(1, 15)  # TO GAIN THESE MINERALS
+    if Inventory:
+        ActionThing = input(" Pick(Enter) | Send minerals above(1) | Miner's Equipment Shop(2) | Inventory(3)\n"
+                            ' >> ')
+    else:
+        ActionThing = input(" Pick(Enter) | Send minerals above(1) | Miner's Equipment Shop(2)\n"
+                            ' >> ')
+    if ActionThing == '1':  # Sell
+        SellingQuestion = input('Send Stone(1)\n'
+                                'Send Iron(2)\n'
+                                'Send Emeralds(3)\n'
+                                'Send all(Enter.)\n '
+                                '>> ')
+        #
+        if SellingQuestion == '1':
+            Money += BagSizeStone
+            if BagSizeStone == 1:
+                print("Your Money is now : " + str(Money) + " | One stone to the mix... thanks Beggar.")
+            elif BagSizeStone >= 2:
+                print("Your Money is now : " + str(Money) + " | Stone arrived, concrete repurposing time.")
+            if BagSizeStone == 0:
+                print("What do you expect for sending nothing? Other than, nothing, of course.")
+            BagSizeStone -= BagSizeStone
+            #
+        elif SellingQuestion == '2':
+            IronCounter += BagSizeIron
+            Money += (BagSizeIron * 2)
+            if BagSizeIron == 1:
+                print("Your Money is now : " + str(
+                    Money) + " | Despite it being a singular node of Iron; we can't complain, Iron is Iron. To the refining belt it goes.")
+            elif BagSizeIron >= 2:
+                print("Your Money is now : " + str(
+                    Money) + " | Yes, we have obtained the Iron. It is now going through the refining belt.")
+            elif BagSizeIron == 0:
+                print(
+                    "You might think it's funny, but for us it isn't. We can't refine air; you have been given no Money as a spaceless-reward.")
+            BagSizeIron -= BagSizeIron
+            #
+        elif SellingQuestion == '3':
+            Money += (BagSizeEmeralds * 4)
+            if BagSizeEmeralds == 1:
+                print("Your Money is now : " + str(
+                    Money) + " | Thanks for the singular Emerald! We also call them 'A Single Laser Beam Crystal'")
+            elif BagSizeEmeralds >= 2:
+                print("Your Money is now : " + str(
+                    Money) + " | We got the Emeralds safe. Yes, we use them for laser tech.")
+            elif BagSizeEmeralds == 0:
+                print("Your Money has not changed. There were no Laser Beams reflecting light in the Trade Pod.")
+            BagSizeEmeralds -= BagSizeEmeralds
+            #
+        elif SellingQuestion == '':
+            Money += BagSizeStone + (BagSizeIron * 2) + (BagSizeEmeralds * 4)
+            if ((BagSizeStone + BagSizeIron + BagSizeEmeralds) >= 3):
+                BagSizeStone -= BagSizeStone
+                BagSizeIron -= BagSizeIron
+                BagSizeEmeralds -= BagSizeEmeralds  # <^Empties all bags after summing the money
+                print("Your Money is now : " + str(
+                    Money) + " | All Minerals have arrived, they are being sent to their sectors.")
+            else:
+                print("Money has not changed. There is absolutely nothing in your 'Highly packed' delivery.")
+            print('=====')
+    # Makes fun of the player for not paying attention at the counter
+    elif (BagSizeStone >= MaxBagSizeStone) and (ActionThing == ""):
+        print('You need to sell your Stone before digging anymore! | Max stone : ' + str(MaxBagSizeStone))
+    elif (BagSizeIron >= MaxBagSizeIron) and (ActionThing == ""):
+        print('You need to sell your Iron before digging anymore! | Max iron : ' + str(MaxBagSizeIron))
+    elif (BagSizeEmeralds >= MaxBagSizeEmeralds) and (ActionThing == ""):
+        print('You need to sell your Emeralds before digging anymore! | Max emeralds : ' + str(MaxBagSizeEmeralds))
+
+    elif (Inventory == True) and (ActionThing == '3'):  # Inventory of The Player!
+
+        if MedKit:  # Only has Med-Kit
+            Selection = input("Choose your item!\n"
+                              "=====\n"
+                              "Med Kit | Total of " + str(MedKitTotal) + ": | Use | (1)\n"
+                                                                         "=====\n"
+                                                                         ">> ")
+            if (Selection == "1") and (
+                    MedKitTotal > 0) and Health:  # WE NEED CODE ON KEEPING THE HEALTH ON 100 IF ANY HEALTH VALUE IS GREATER THAN 50
+                Remainder = 100 - Health
+                Health += Remainder
+                MedKitTotal -= 1
+                print("Your Health is now : " + str(Health) + " after healing.")
+            elif (Selection == "1") and (MedKitTotal > 0) and (Health <= 50):
+                Health += MedKitGain
+            elif (Selection == "1") and (MedKitTotal == 0):
+                print("You don't have Med-Kits!")
+
+        elif BoughtSharpPickaxe:  # Only has Sharp
+            Selection = input("Choose your item!\n"
+                              "=====\n"
+                              "Sharp Pickaxe(1)"
+                              "=====\n"
+                              ">> ")
+            if (Selection == "1") and SharpPickaxe:
+                print("It's not on? | You have sharp at your finger tips already.")
+        #
+        elif BoughtRivetedPickaxe:  # Only has Riveted
+            Selection = input("Choose your item!\n"
+                              "=====\n"
+                              "Riveted Pickaxe(1)"
+                              "=====\n"
+                              ">> ")
+            if (Selection == "1") and RivetedPickaxe:
+                print("Efficiency Second? | You are supposed to be mining with this already.")
+        #
+        elif BoughtRivetedPickaxe and MedKit:  # Only has Riveted and MedKit
+            Selection = input("Choose your item!\n"
+                              "=====\n"
+                              "Riveted Pickaxe(1)"
+                              "Med Kit | Total of " + str(MedKitTotal) + ": | Use | (2)\n"
+                                                                         "=====\n"
+                                                                         ">> ")
+            if (Selection == "1") and (RivetedPickaxe == False):
+                RivetedPickaxe = True
+                print("Efficiency First! | Riveted Pickaxe equipped!")
+            elif (Selection == "1") and RivetedPickaxe:
+                print("Efficiency Second? | You are supposed to be mining with this already.")
+            #
+            elif (Selection == "2") and (MedKitTotal > 0) and (Health > 50):
+                Remainder = 100 - Health
+                Health += Remainder
+                MedKitTotal -= 1
+                print("Your Health is now : " + str(Health) + " after healing.")
+            elif (Selection == "2") and (MedKitTotal > 0) and (Health <= 50):
+                Health += MedKitGain
+                print("Your Health is now : " + str(Health) + " after healing.")
+            elif (Selection == "2") and (MedKitTotal == 0):
+                print("You don't have Med-Kits!")
+
+        #
+        elif BoughtSharpPickaxe:  # Only has Sharp and Med-Kit
+            Selection = input("Choose your item!\n"
+                              "=====\n"
+                              "Sharp Pickaxe(1)"
+                              "Med Kit | Total of " + str(MedKitTotal) + ": | Use | (2)\n"
+                                                                         "=====\n"
+                                                                         ">> ")
+            if (Selection == "1") and (SharpPickaxe == False):  # Choose Sharp
+                SharpPickaxe = True
+                print("It's on! | Sharp Pickaxe equipped!")
+            elif (Selection == "1") and SharpPickaxe:
+                print("It's not on? | You have sharp at your finger tips already.")
+            #
+            elif (Selection == "2") and (MedKitTotal > 0) and (Health > 50):  # Choose Med-Kit
+                Remainder = 100 - Health
+                Health += Remainder
+                MedKitTotal -= 1
+                print("Your Health is now : " + str(Health) + " after healing.")
+            elif (Selection == "2") and (MedKitTotal > 0) and (Health <= 50):
+                Health += MedKitGain
+                print("Your Health is now : " + str(Health) + " after healing.")
+            elif (Selection == "2") and (MedKitTotal == 0):
+                print("You don't have Med-Kits!")
+        #
+        elif BoughtRivetedPickaxe and BoughtSharpPickaxe:  # Has both but no Med-Kit
+            Selection = input("Choose your item!\n"
+                              "=====\n"
+                              "Riveted Pickaxe(1)\n"
+                              "Sharp Pickaxe  (2)"
+                              "=====\n"
+                              ">> ")
+            if (Selection == "1") and (not RivetedPickaxe):  # Equip Riveted code
+                RivetedPickaxe = True
+                SharpPickaxe = False
+                print("Efficiency First! | Riveted Pickaxe equipped!")
+            elif (Selection == "1") and (RivetedPickaxe):
+                print("Efficiency Second? | You have the Riveted already equipped kind Beggar.")
+            #
+            elif (Selection == "2") and (not SharpPickaxe):  # Equip the Sharp
+                RivetedPickaxe = False
+                SharpPickaxe = True
+                print("It's on! | Sharp Pickaxe equipped!")
+            elif (Selection == "2") and SharpPickaxe:
+                print("It's not on? | You have sharp at your finger tips already.")
+        #
+        elif BoughtRivetedPickaxe and BoughtSharpPickaxe and MedKit:  # Has both and Med-Kit
+            Selection = input("Choose your item!\n"
+                              "=====\n"
+                              "Riveted Pickaxe              (1)\n"
+                              "Sharp Pickaxe                (2)\n"
+                              "Med Kit | Total of " + str(MedKitTotal) + ": | Use | (3)\n"
+                                                                         "=====\n"
+                                                                         ">> ")
+            if (Selection == "1") and (not RivetedPickaxe):
+                RivetedPickaxe = True
+                SharpPickaxe = False
+                print("Efficiency First! | Riveted Pickaxe equipped!")
+            elif (Selection == "1") and (RivetedPickaxe == True):
+                print("Efficiency Second? | You have the Riveted already equipped kind Beggar.")
+            #
+            elif (Selection == "2") and (not SharpPickaxe):
+                SharpPickaxe = True
+                RivetedPickaxe = False
+                print("It's on! | Sharp Pickaxe equipped!")
+            elif (Selection == "2") and SharpPickaxe:
+                print("It's not on? | You have sharp at your finger tips already.")
+            #
+            elif (Selection == "3") and (MedKitTotal > 0) and (Health > 50):
+                Remainder = 100 - Health
+                Health += Remainder
+                MedKitTotal -= 1
+                print("Your Health is now : " + str(Health) + " after healing.")
+            elif (Selection == "3") and (MedKitTotal > 0) and (Health <= 50):
+                Health += MedKitGain
+                print("Your Health is now : " + str(Health) + " after healing.")
+            elif (Selection == "3") and (MedKitTotal == 0):
+                print("You don't have Med-Kits!")
+
+            #
+
+        #
+
+    #
+    # The Shop.
+    elif ActionThing == '2':
+        BuyAction = input("Welcome to the Miner's shop! | Your money still is : " + str(Money) + "\n"
+                                                                                                 "=====\n"
+                                                                                                 "Next Tab    | >(1)> Living Corner(Items and Pickaxes)\n"
+                                                                                                 "Stone       | >(2)> " + str(
+            BagUpgradePriceStone) + "$ " + "|Buy bag upgrade|+" + str(BagUpgradeStone) + " space (each)!\n"
+                                                                                         "Iron        | >(3)> " + str(
+            BagUpgradePriceIron) + "$ " + "|Buy bag upgrade|+" + str(BagUpgradeIron) + " space!\n"
+                                                                                       "Emeralds    | >(4)> " + str(
+            BagUpgradePriceEmeralds) + "$ " + "|Buy bag upgrade|+" + str(
+            BagUpgradeEmeralds) + " space!\n"
+                                  "Max Med-Kit | >(5)> 750$ | Max Med-Kit upgrade| +1 Extra Med-Kit! (Final capacity is 2.)\n"
+                                  "=====\n"
+                                  "Exit shop (6)\n"
+                                  ">> ")
+        # Code for bag upgrades
+        if (BuyAction == '2'):  # Stone Bag Upgrade
+            if (Money >= BagUpgradePriceStone) and (MaxBagSizeStone < 300):
+                Money -= BagUpgradePriceStone
+                MaxBagSizeStone += BagUpgradeStone
+                UpgradesBought += 1
+                if (MaxBagSizeStone != 300):
+                    print("Your maximum Stone bag size increased! Size is now : " + str(MaxBagSizeStone))
+                if (MaxBagSizeStone == 300):
+                    print("You have obtained the final upgrade for your Stone capacity. Cheers Beggar!")
+            elif (MaxBagSizeStone == 300):
+                print("Your Stone bag has already reached its maximum potential!")
+            else:
+                print("You don't have enough money to buy this!")
+            #
+        elif (BuyAction == '3'):  # Iron Bag Upgrade
+            if (Money >= BagUpgradePriceIron) and (MaxBagSizeIron < 100):
+                Money -= BagUpgradePriceIron
+                MaxBagSizeIron += BagUpgradeIron
+                UpgradesBought += 1
+                if (MaxBagSizeIron != 100):
+                    print("Your maximum Iron bag size increased! Size is now : " + str(MaxBagSizeIron))
+                if (MaxBagSizeIron == 100):
+                    print("You have obtained the final upgrade for your Iron capacity. Cheers Beggar!")
+            elif (MaxBagSizeIron == 100):
+                print("Your Iron bag has already reached its maximum potential!")
+            else:
+                print("You don't have enough money for this upgrade!!")
+            #
+        elif (BuyAction == '4'):  # Emeralds Bag Upgrade
+            if (Money >= BagUpgradePriceEmeralds) and (MaxBagSizeEmeralds < 50):
+                Money -= BagUpgradePriceEmeralds
+                MaxBagSizeEmeralds += BagUpgradeEmeralds
+                UpgradesBought += 1
+                print("Your maximum emeralds bag size increased! Size is now : " + str(MaxBagSizeEmeralds))
+                if (MaxBagSizeEmeralds != 50):
+                    print("Your maximum Emeralds bag size increased! Size is now : " + str(MaxBagSizeEmeralds))
+                if (MaxBagSizeEmeralds == 50):
+                    print("You have obtained the final upgrade for your Emeralds capacity. Cheers Beggar miner!")
+            elif (MaxBagSizeEmeralds == 100):
+                print("Your Emeralds bag has already reached its maximum potential!")
+            else:
+                print("You clearly don't have enough money!!!")
+            #
+        elif (BuyAction == '5') and (Money >= MaxMedKitPrice) and (MaxMedKit < 2):  # Buy the Max Med-Kit upgrade
+            MaxMedKit += 1
+            Money -= MaxMedKitPrice
+            UpgradesBought += 1
+            print("You have gained space for 2 Med-Kits! Medic yourself at home.")
+            #
+        elif (BuyAction == '5') and (Money < MaxMedKitPrice) and (MaxMedKit == 2):
+            print(
+                "You have maximum space for the Med-Kit and not enough money to try* and buy it again. Is this a joke?")
+        elif (BuyAction == '5') and (Money < MaxMedKitPrice):
+            print("You need " + str(MaxMedKitPrice) + "$, in order to buy the upgrade!")
+            #
+        elif (BuyAction == '5') and (MaxMedKit == 2):
+            print("Your max amount of Med-Kits is already fully upgraded Beggar.")
+
+            #
+            # Living Corner/ Items shop.
+        elif (BuyAction == '1'):
+            BuyAction2 = input("=====\n"
+                               "Welcome to the Living Corner! | We sell items here!"
+                               "Note : These items are instantly sent to your inventory via Trade Pod.\n"
+                               "=====\n"
+                               "Sharp Pickaxe   | >(1)> 1500$        | 'More Fight Efficient' | (1)\n"
+                               "Riveted Pickaxe | >(2)> 2000$        | 'More Mining Efficient' | (2)\n"
+                               "Med-Kit         | >(3)> 15 Emeralds. | 'Regain 50 Health' + 'Great Safety Wrapping' (3)\n"
+                               "Everything bought here is a final purchase. No 'accept payment' or 'refunds,' they are outer wordly business.\n"
+                               "=====\n"
+                               ">> ")
+            if BuyAction2 == '1' and (Money < SharpPickaxePrice):  # Sharp Pickaxe
+                print("You can't own this Sharp Pickaxe. You are currently lacking bloody funding!")
+            elif BuyAction2 == '1' and (SharpPickaxe == True):
+                print("You have sharpness in your hand Beggar!")
+            elif BuyAction2 == '1' and (BoughtSharpPickaxe == True):
+                print("You bought this already! Make another selection.")
+            elif BuyAction2 == '1' and (BoughtSharpPickaxe == True) and (SharpPickaxe == True):
+                print("Funny, very funny to equip something, then try to buy it.")
+            elif BuyAction2 == '1' and (Money >= SharpPickaxePrice) and (SharpPickaxe == False) and (
+                    BoughtSharpPickaxe == False):
+                BoughtSharpPickaxe = True
+                SharpPickaxe = True
+                Money -= SharpPickaxePrice
+                if not Inventory:
+                    Inventory = True
+                    print("You have bought the Sharp Pickaxe, it is now equipped*, you unlocked your inventory!")
+                elif Inventory:
+                    print("You have bought the Sharp Pickaxe, it is now equipped*. Now, on to battle Beggar Miner!")
+            #
+            elif BuyAction2 == '2' and (Money < RivetedPickaxePrice):  # Riveted Pickaxe
+                print("You can't own the Riveted Pickaxe. You lack money and decadence!")
+            elif BuyAction2 == '2' and (RivetedPickaxe):
+                print("You have the Riveted Pick equipped beggar!")
+            elif BuyAction2 == '2' and (BoughtRivetedPickaxe):
+                print("You bought this already! Make another selection.")
+            elif BuyAction2 == '2' and (BoughtRivetedPickaxe) and (RivetedPickaxe):
+                print(
+                    "Funnyman, funny, you really do sound like someone who worked for the Rivetingle Mining District. You have the Riveted Pickaxe equipped, and you bought it; why are you trying to get it again???")
+            elif BuyAction2 == '2' and (Money >= RivetedPickaxePrice) and (BoughtRivetedPickaxe == False) and (
+                    RivetedPickaxe == False):
+                BoughtRivetedPickaxe = True
+                RivetedPickaxe = True
+                Money -= RivetedPickaxePrice
+                if not Inventory:
+                    Inventory = True
+                    print("You have bought the Riveted Pickaxe, it is now equipped*, you unlocked your inventory!")
+                elif Inventory:
+                    print(
+                        "You have bought the Riveted Pickaxe, it is now equipped* Show efficiency at its Rivetingle-type maximum.")
+            #
+            elif BuyAction2 == '3' and (BagSizeEmeralds >= MedKitPrice) and (MedKitTotal < MaxMedKit):  # Buying Med-Kit
+                if not Inventory and (not MedKit):  # Inventory false and Med-Kit initially false.
+                    Inventory = True
+                    MedKit = True
+                    BagSizeEmeralds -= MedKitPrice
+                    MedKitTotal += 1
+                    print("You gained a Med-Kit!, you unlocked your inventory!\n"
+                          "Your current Med-Kit count is 1 | Emeralds are back to 0, thanks for all the Laser.\n"
+                          "=====\n")
+                elif Inventory and (
+                not MedKit):  # Med-Kit is initially false ; first time getting one. Inventory is already on
+                    MedKit = True
+                    BagSizeEmeralds -= MedKitPrice
+                    MedKitTotal += 1
+                    print("You gained a Med-Kit! Go get yourself wrapped up, and ready to fight Beggar.\n"
+                          "Your current Med-Kit count is " + str(MedKitTotal) + " / " + str(MaxMedKit) + "\n"
+                                                                                                         "=====\n")
+                elif Inventory and MedKit:  # Med-Kit is true; Inventory true.
+                    BagSizeEmeralds -= MedKitPrice
+                    MedKitTotal += 1
+                    print("You gained another Med-Kit, get it to good use.\n"
+                          "Your current Med-Kit count is " + str(MedKitTotal) + " / " + str(MaxMedKit) + "\n"
+                                                                                                         "=====\n")
+            elif BuyAction2 == '3' and (BagSizeEmeralds < MedKitPrice):
+                print("You simply cannot afford to get a Med-Kit! Get 15 Emeralds.\n")
+                print("=====")
+
+
+        elif (BuyAction == '6'):
+            print("=====")
+    #
+    #
+    # Well Defined Mining Function Variables
+    elif ActionThing == "":
+        if RivetedPickaxe == False and SharpPickaxe == False:  # Normal Pickaxe.
+            if IronChance == 1:
+                BagSizeIron += 1
+            elif EmeraldsChance == 1:
+                BagSizeEmeralds += 1
+            else:
+                BagSizeStone += 1
+        elif RivetedPickaxe == False and SharpPickaxe == True:  # Sharp Pickaxe.
+            if IronChance == 1:
+                BagSizeIron += 1
+            elif EmeraldsChance == 1:
+                BagSizeEmeralds += 1
+            else:
+                BagSizeStone = BagSizeStone + 1
+        elif RivetedPickaxe == True and SharpPickaxe == False:  # Riveted Pickaxe.
+            if IronChance == 1:
+                BagSizeIron += random.randint(2, 3)
+            elif EmeraldsChance == 1:
+                BagSizeEmeralds += random.randint(1, 2)
+            else:
+                BagSizeStone += 2 + random.randint(0, 3)
+
+        # The statement below is always repeated at the end of this while, lets the player know their things.
+    print(" Stone: " + str(BagSizeStone) + " / " + str(MaxBagSizeStone) + " | " + " Iron: " + str(
+        BagSizeIron) + " / " + str(MaxBagSizeIron) + " | " + " Emeralds: " + str(BagSizeEmeralds) + " / " + str(
+        MaxBagSizeEmeralds) + " | " + "Money: " + str(Money))
+
+    # Events Go Below.
+
+    # This event specifically is : Bug Encounter #
+    if (UpgradesBought >= 1):  # Follow 2nd then 4th line to write a different event.
+        Bugger = 300
+        BuggerAttack = 10
+        HardShelled = 650
+        HardShelledAttack = 35
+        #
+        #
+        FirstEventChance = random.randint(1, 65)  # 1.5152% Chance of Happening
+        NormalBugChance = random.randint(1, 5)  # 16.6667% CoH
+        HardShelledChance = random.randint(1, 50)  # 1.9608% CoH
+        if (FirstEventChance == 1) and (NormalBugChance == 1):  # Most likely the first fight
+
+            print(
+                "MISSION CONTROL : Hey miner, there's something approaching your tunnel. It's digging quick too, stick with us on the comms.")
+            time.sleep(3)
+            print(
+                "MISSION CONTROL : ... Bugger! Bug!, I repeat, we got a bug on the radar! Prepare to engage now Beggar Miner. ")
+            time.sleep(3)
+            print("NARRATOR : Locked and loaded with your pickaxe, an 8 legged bugger is in your path!")
+            time.sleep(3)
+            while (Health > 0) and (Bugger > 0):
+                DodgeChance = random.randint(1, 4)
+                PrintRandom1 = random.randint(1, 5)
+                #
+                print("The bug's health is at : " + str(Bugger))
+                print("Your health is : " + str(Health))
+                choice = str(input('''
+            Attack(1)
+            Dodge(2)
+            >> '''))
+                # Choice Code
+                if choice == "1":  # Normal Attack
+                    if not SharpPickaxe:  # If equipped Sharp Pickaxe
+                        Bugger -= PlayerAttack
+                        if Bugger > 0:
+                            Health -= BuggerAttack  # Player only gets hurt until code makes sure that the bug is dead.
+                            if PrintRandom1 == 1:
+                                print(
+                                    "NARRATOR : You swing your pickaxe at the bug, the bug took a hit, and it fought back!")
+                            elif PrintRandom1 == 2:
+                                print(
+                                    "NARRATOR : After swinging your pickaxe at one of the bugger's legs, it bites you back with its fangs!")
+                            elif PrintRandom1 == 3:
+                                print(
+                                    "NARRATOR : You try and aim for the bugger's head, you miss and land your pickaxe in its body; Of course it bites your chest in retaliation!")
+                            elif PrintRandom1 == 4:
+                                print("Up your pickaxe goes, and down it falls on one of the toes of the bug,")
+                        elif Bugger <= 0:
+                            print("MISSION CONTROL : Hold on a sec...")
+                    elif SharpPickaxe:
+                        Bugger -= SharpAttack
+                        if Bugger > 0:
+                            Health -= BuggerAttack  # Player only gets hurt until code makes sure that the bug is dead.
+                            if PrintRandom1 == 1:
+                                print(
+                                    "NARRATOR : You swing your pickaxe at the bug, the bug took a hit, and it fought back!")
+                            elif PrintRandom1 == 2:
+                                print(
+                                    "NARRATOR : After swinging your pickaxe at one of the bugger's legs, it bites you back with its fangs!")
+                            elif PrintRandom1 == 3:
+                                print(
+                                    "NARRATOR : You try and aim for the bugger's head, you miss and land your pickaxe in its body; Of course it bites your chest in retaliation!")
+                            elif PrintRandom1 == 4:
+                                print("Up your pickaxe goes, and down it falls on one of the toes of the bug,")
+                        elif Bugger <= 0:
+                            print("MISSION CONTROL : Hold on a sec...")
+
+
+                elif choice == "2":  # Dodge Roll Chance in action.
+                    if DodgeChance <= 3:
+                        if not SharpPickaxe:
+                            Bugger -= PlayerAttack
+                            print(
+                                "MISSION CONTROL : You dodged the bugger's fangs successfully? Oh wow! And very nice swing of the pick!")
+                            print("NARRATOR : You hit the bug after dodging it!")
+                        elif SharpPickaxe:
+                            Bugger -= SharpAttack
+                            print(
+                                "MISSION CONTROL : You dodged the bugger's fangs successfully? Oh, now that's a stabbing to the head right there!")
+                            print("You stabbed the bug after dodging it!!")
+                    elif DodgeChance == 4:
+                        Health -= BuggerAttack
+                        print(
+                            "MISSION CONTROL : Oh lord, that was a miserable barrel roll. You've got more than just those moves right?")
+                        # Above is code for the spider bug.
+                        # Below is code for a HardShelled.
+        if (FirstEventChance == 1) and (HardShelledChance == 1) and (BoughtSharpPickaxe):  # This is where the player is tested
+            SharpPickaxe = True
+            print(
+                "MISSION CONTROL : Hey miner, there's something approaching your tunnel. It's digging quick too, stick with us on the comms. Wait-")
+            time.sleep(6)
+            print(
+                "MISSION CONTROL : Wait a second! A Hard Shelled!?, I repeat, we got a Hard Shelled on the radar! Prepare to engage now.\n")
+            time.sleep(5)
+            print(
+                "MISSION CONTROL : This is not a drill, a Hard Shelled bug has approached your area and is going to arrive any moment soon. ")
+            time.sleep(4)
+            print(
+                "NARRATOR : Locked and loaded, with your Sharpest Pickaxe available*. A hard fought fight is ready to coexist with your legacy.")
+            time.sleep(2)
+            print("*The Sharp Pickaxe has been equipped, this fight happens for obtaining the Pick.*")
+            time.sleep(5)
+            print("NARRATOR : Fight, that, Hard, Shell!")
+            time.sleep(3)
+            while (Health > 0) and (HardShelled > 0):
+                DodgeChance = random.randint(1, 4)
+                PrintRandom1 = random.randint(1, 5)
+                #
+                print("The Hard Shelled's Health is at : " + str(HardShelled))
+                print("Your health is : " + str(Health))
+                choice = input(
+                    "Attack(1)"
+                    "Dodge(2)"
+                    "Call a Targeted Drill(3) | Requires 300 total Iron sent* | Current sold* Iron : " + str(IronCounter) + " ."
+                    ">> ")
+                # Choice Code
+                if choice == "1":  # Normal Attack
+                    HardShelled -= SharpAttack
+                    if HardShelled <= 0:
+                        print("MISSION CONTROL : Hold on a sec...")
+                    elif HardShelled > 0:
+                        Health -= HardShelledAttack  # Player only gets hurt until code makes sure that the bug is dead.
+                        if PrintRandom1 == 1:
+                            print("NARRATOR : You stab the HardShelled, it screams in pain, and it kicks back!")
+                        elif PrintRandom1 == 2:
+                            print(
+                                "NARRATOR : After swinging your pickaxe at one of the claws of the HardShelled, it carves its fangs and sharp teeth into your armor!")
+                        elif PrintRandom1 == 3:
+                            print(
+                                "NARRATOR : Stabbing the head of the HardShelled. Looking at you devilishly as your pickaxe is stuck; your arm is stabbed in retaliation.")
+                        elif PrintRandom1 == 4:
+                            print("NARRATOR : ")
+                    elif Bugger <= 0:
+                        print(
+                            "MISSION CONTROL : Hold on a sec...")  ###CHECK THIS CODE, SOMETHING'S BEEN UP WITH THE CODE
+
+
+                elif choice == "2":  # Dodge Roll Chance in action.
+                    if DodgeChance <= 3:
+                        HardShelled -= SharpAttack
+                        print(
+                            "MISSION CONTROL : You dodged the gas from the HardShelled. Oh, now that's a stabbing! Keep them in pain.")
+                        print("You stabbed the bug after dodging it for " + str(SharpAttack) + "!!")
+                    elif DodgeChance == 4:
+                        Health -= HardShelledAttack
+                        print("MISSION CONTROL : Beggar, you need to be careful! You are jeopardizing your life!")
+                        print("You got taken a bite out of- " + str(HardShelledAttack) + " Points!")
+
+                elif choice == "3":
+                    print("cheese")
+
+                # EndFightCode
+        if (Bugger <= 0) and (Health > 0):  # Dead bug / Alive Player
+            print(
+                "MISSION CONTROL : The bug has been neutralized, your path to mine has been cleared. Keep mining, Beggar Miner.")
+            print("=====")
+        elif ((Bugger <= 0) and (Health <= 0) and (Health > Bugger)):  # Dead bug / Dead Player
+            print("MISSION CONTROL : Oh hey, the bugger is dead! You didn't get stomped right? Oh, you did.")
+            time.sleep(3)
+            print(
+                "MISSION CONTROL : Don't worry about this Beggar, you will keep your Minerals and Money, your pickaxes and Med-Kits will be forfeited however, they were broken from you falling over.")
+            Inventory = False
+            BoughtRivetedPickaxe = False
+            BoughtSharpPickaxe = False
+            RivetedPickaxe = False
+            SharpPickaxe = False
+            MedKitTotal = 0
+            time.sleep(5)
+            print("===== Game Over : Died to sizeable bug spider. =====")
+            time.sleep(3)
+            print("Loading.")
+            time.sleep(2)
+            print("Loading..")
+            time.sleep(2)
+            print("Loading...")
+            time.sleep(2)
+
+        elif (Bugger <= 0) and (Health > 0):  # Dead Shell / Alive Player
+            print("MISSION CONTROL : The Hard Shelled has been declared,\n")
+            time.sleep(3)
+            print(
+                "MISSION CONTROL : Neutralized, your path to mine has been cleared. Amazing job Beggar Miner, keep us proud.\n")
+            print("=====")
+        elif ((Bugger <= 0) and (Health <= 0) and (Health > Bugger)):  # Dead bug / Alive Player
+            print(
+                "MISSION CONTROL : Yes! The Hard Shelled bugger is dead! You didn't get thrown against the floor right? Oh, you did.\n")
+            time.sleep(3)
+            print(
+                "MISSION CONTROL : Don't worry about this Beggar, you will keep your Minerals and Money, your pickaxes and Med-Kits will be forfeited however. They were broken from you falling over. Get ready to be re-deployed soon, this mission matters to us a lot.\n")
+            Inventory = False
+            BoughtRivetedPickaxe = False
+            BoughtSharpPickaxe = False
+            RivetedPickaxe = False
+            SharpPickaxe = False
+            MedKitTotal = 0
+            time.sleep(5)
+            print("===== Game Over : Died to Hard Shelled spider. =====\n")
+            time.sleep(3)
+            print("Loading.\n")
+            time.sleep(2)
+            print("Loading..\n")
+            time.sleep(2)
+            print("Loading...\n")
+            time.sleep(2)
+
+        elif ((Bugger > 0) and (Health <= 0)) or ((HardShelled > 0) and (Health <= 0)):  # Forfeit your items
+            BoughtRivetedPickaxe = False
+            BoughtSharpPickaxe = False
+            RivetedPickaxe = False
+            SharpPickaxe = False
+            BagSizeStone -= BagSizeStone
+            BagSizeIron -= BagSizeIron
+            BagSizeEmeralds -= BagSizeEmeralds
+            Money = 0
+            UpgradesBought = 0
+            MedKitTotal = 0
+            if ((Bugger > 0) and (Health <= 0)):
+                print("MISSION CONTROL : Everyone at HQ is disappointed, we're bringing you back home right now.\n"
+                      "MISSION CONTROL : We're ordering a rescue pod to your location, stick with us on the comms,\n"
+                      "MISSION CONTROL : We wouldn't be getting you out of here if you weren't trying your best with these bugs.\n"
+                      "MISSION CONTROL : Get ready to be deployed again, you will your permanent upgrades. Everything else is currently impossibly broken; minerals, pickaxes, and the tunnel itself.\n"
+                      "Best of luck back Beggar, I'll see you after you heal in the Med-bay. For the meanwhile, get your hopes up, this mission will be a breeze with the best of preparations.\n")
+                time.sleep(5)
+                print("===== Game Over : Died to sizeable bug spider. =====\n")
+                time.sleep(3)
+                print("Loading.\n")
+                time.sleep(2)
+                print("Loading..\n")
+                time.sleep(2)
+                print("Loading...\n")
+                time.sleep(2)
+            elif ((HardShelled > 0) and (Health <= 0)):
+                print(
+                    "MISSION CONTROL : Everyone at HQ is horrified at that beating, we're bringing you back home, right, now.\n"
+                    "MISSION CONTROL : We're ordering a rescue pod to your location, stick with us on the comms, just a little longer.\n"
+                    "MISSION CONTROL : We wouldn't be getting you out of here if that Hard Shelled didn't almost show its inner shell.\n"
+                    "MISSION CONTROL : You will keep your permanent upgrades on this same mission. Everything else is currently impossibly broken; minerals, pickaxes, even the tunnel you dug.\n"
+                    "MISSION CONTROL : Best of luck back Beggar, I'll see you after you heal in the Med-bay. Be ready to go from zero to hero soon!\n")
+                time.sleep(5)
+                print("===== Game Over : Died to Hard Shelled spider. =====\n")
+                time.sleep(3)
+                print("Loading.\n")
+                time.sleep(2)
+                print("Loading..\n")
+                time.sleep(2)
+                print("Loading...\n")
+                time.sleep(2)
